@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521/FREEPDB1
+    username: taskforge
+    password: taskforge123
+    driver-class-name: oracle.jdbc.OracleDriver
+  jpa:
+    database-platform: org.hibernate.dialect.OracleDialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8080
+
+app:
+  jwt-secret: 3f8e2a1d9b7c4e6f0a2d5b8e1f4c7a9d3e6b0c2f5a8d1e4b7c0f3a6d9e2b5c8
+  jwt-expiration-ms: 86400000
