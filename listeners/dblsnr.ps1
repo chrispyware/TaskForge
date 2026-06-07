@@ -1,0 +1,1 @@
+C:\app\cwall\product\26ai\dbhomeFree\bin\lsnrctl status

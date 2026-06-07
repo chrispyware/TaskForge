@@ -1,0 +1,25 @@
+# ── Spring Boot ──────────────────────────────────────
+target/
+*.jar
+*.war
+*.class
+application.yml
+application-*.yml
+
+# ── Angular ──────────────────────────────────────────
+node_modules/
+dist/
+.angular/
+
+# ── IDE ──────────────────────────────────────────────
+.vscode/
+.idea/
+*.iml
+
+# ── OS ───────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Environment ──────────────────────────────────────
+*.env
+.env
