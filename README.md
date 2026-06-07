@@ -10,10 +10,10 @@ A full-stack task and project management application built with Angular and Spri
 
 ## Project Structure
 TaskForge/
-├── taskforge-ui/     ← Angular frontend
-├── taskforge-api/    ← Spring Boot backend
-├── db/               ← Oracle SQL scripts
-└── README.md
+  |-- taskforge-ui/     ← Angular frontend
+  |-- taskforge-api/    ← Spring Boot backend
+  |-- db/               ← Oracle SQL scripts
+  |-- README.md
 
 ## Getting Started
 
