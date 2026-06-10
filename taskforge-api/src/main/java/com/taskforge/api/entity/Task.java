@@ -36,9 +36,11 @@ public class Task {
     @Lob
     private String description;
 
+    @Builder.Default
     @Column(nullable = false, length = 20)
     private String status = "TODO";
 
+    @Builder.Default
     @Column(nullable = false, length = 10)
     private String priority = "MEDIUM";
 

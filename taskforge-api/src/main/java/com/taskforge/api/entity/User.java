@@ -27,7 +27,8 @@ public class User {
 
     @Column(name = "DISPLAY_NAME", nullable = false, length = 100)
     private String displayName;
-
+    
+    @Builder.Default
     @Column(nullable = false, length = 20)
     private String role = "USER";
 
