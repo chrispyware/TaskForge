@@ -1,12 +1,11 @@
 package com.taskforge.api.entity;
 
-import com.taskforge.api.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.List;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "PROJECTS")
@@ -36,5 +35,5 @@ public class Project {
 
     @CreationTimestamp
     @Column(name = "CREATED_AT", updatable = false)
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 }

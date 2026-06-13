@@ -3,7 +3,7 @@ package com.taskforge.api.dto;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -13,5 +13,5 @@ public class CommentResponse {
     private Long authorId;
     private String authorName;
     private Long taskId;
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 }

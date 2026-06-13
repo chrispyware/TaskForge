@@ -3,8 +3,8 @@ package com.taskforge.api.dto;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -19,6 +19,6 @@ public class TaskResponse {
     private String projectName;
     private Long assignedToId;
     private String assigneeName;
-    private Instant createdAt;
-    private Instant updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
