@@ -37,3 +37,9 @@ See [db/README.md](db/README.md) for full instructions.
 1. Run `npm install` from the `taskforge-ui` folder
 2. Run `ng serve`
 3. Open `http://localhost:4200`
+
+### Running the backend
+Use the provided run script instead of mvnw directly:
+`build_deploy.cmd`
+
+This sets the required JVM timezone argument for Oracle JDBC compatibility.

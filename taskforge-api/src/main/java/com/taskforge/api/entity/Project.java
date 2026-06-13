@@ -5,7 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.List;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "PROJECTS")
@@ -28,12 +28,12 @@ public class Project {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "OWNER_ID", nullable = false)
-    private Long owner;
+    private User owner;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks;
 
     @CreationTimestamp
     @Column(name = "CREATED_AT", updatable = false)
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 }
