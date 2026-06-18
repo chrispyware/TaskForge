@@ -3,9 +3,9 @@ export interface Project {
     name: string;
     description: string;
     ownerId: number;
-    ownderName: string;
+    ownerName: string;
     taskCount: number;
-    createAt: string;
+    createdAt: string;
 }
 
 export interface CreateProjectRequest {
