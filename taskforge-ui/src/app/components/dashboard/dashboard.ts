@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { Navbar } from '../navbar/navbar';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [Navbar],
   templateUrl: './dashboard.html',
-  styleUrl: './dashboard.scss',
+  styleUrl: './dashboard.scss'
 })
 export class Dashboard {}
