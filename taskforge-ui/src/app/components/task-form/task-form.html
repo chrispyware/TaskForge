@@ -1,1 +1,104 @@
-<p>task-form works!</p>
+<app-navbar />
+
+<div class="task-form-container">
+  <mat-card class="task-form-card">
+
+    <mat-card-header>
+      <mat-icon mat-card-avatar color="primary">
+        {{ isEditMode ? 'edit' : 'add_task' }}
+      </mat-icon>
+      <mat-card-title>{{ isEditMode ? 'Edit Task' : 'Create New Task' }}</mat-card-title>
+      <mat-card-subtitle>
+        {{ isEditMode ? 'Update the task details below' : 'Fill in the details for your new task' }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <div class="loading-spinner" *ngIf="isLoading && isEditMode">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+
+    <mat-card-content *ngIf="!isLoading || !isEditMode">
+      <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title"
+                 placeholder="What needs to be done?">
+          <mat-error *ngIf="taskForm.get('title')?.hasError('required')">
+            Title is required
+          </mat-error>
+          <mat-error *ngIf="taskForm.get('title')?.hasError('maxlength')">
+            Title cannot exceed 500 characters
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description"
+                    placeholder="Add more details about this task"
+                    rows="4">
+          </textarea>
+          <mat-hint>Optional</mat-hint>
+        </mat-form-field>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Priority</mat-label>
+            <mat-select formControlName="priority">
+              <mat-option *ngFor="let p of priorities" [value]="p">
+                {{ p | titlecase }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let s of statuses" [value]="s">
+                {{ s.replace('_', ' ') | titlecase }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Assign To</mat-label>
+            <mat-select formControlName="assignedToId">
+              <mat-option [value]="null">Unassigned</mat-option>
+              <mat-option *ngFor="let user of users" [value]="user.id">
+                {{ user.displayName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Due Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dueDate">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-hint>Optional</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="error-message" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+
+        <div class="form-actions">
+          <button mat-button type="button" (click)="onCancel()">
+            Cancel
+          </button>
+          <button mat-raised-button color="primary" type="submit"
+                  [disabled]="taskForm.invalid || isLoading">
+            <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+            <mat-icon *ngIf="!isLoading">{{ isEditMode ? 'save' : 'add' }}</mat-icon>
+            <span *ngIf="!isLoading">{{ isEditMode ? 'Save Changes' : 'Create Task' }}</span>
+          </button>
+        </div>
+
+      </form>
+    </mat-card-content>
+
+  </mat-card>
+</div>

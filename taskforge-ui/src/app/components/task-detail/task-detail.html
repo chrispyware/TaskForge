@@ -1,1 +1,147 @@
-<p>task-detail works!</p>
+<app-navbar />
+
+<div class="task-detail-container">
+
+  <div class="loading-spinner" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div *ngIf="!isLoading && task">
+
+    <div class="page-header">
+      <button mat-icon-button [routerLink]="['/projects', task.projectId, 'board']" matTooltip="Back to board">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div class="header-actions">
+        <button mat-button color="primary" (click)="editTask()">
+          <mat-icon>edit</mat-icon>
+          Edit
+        </button>
+        <button mat-button color="warn" (click)="deleteTask()">
+          <mat-icon>delete</mat-icon>
+          Delete
+        </button>
+      </div>
+    </div>
+
+    <mat-card class="task-card">
+      <mat-card-content>
+
+        <div class="task-title-row">
+          <h1>{{ task.title }}</h1>
+          <div class="badges">
+            <span class="status-badge" [class]="getStatusColor(task.status)">
+              {{ task.status.replace('_', ' ') }}
+            </span>
+            <span class="priority-badge" [class]="getPriorityColor(task.priority)">
+              {{ task.priority }}
+            </span>
+          </div>
+        </div>
+
+        <p class="task-project">
+          <mat-icon class="inline-icon">folder</mat-icon>
+          {{ task.projectName }}
+        </p>
+
+        <mat-divider></mat-divider>
+
+        <div class="task-description" *ngIf="task.description">
+          <h3>Description</h3>
+          <p>{{ task.description }}</p>
+        </div>
+
+        <div class="task-meta-grid">
+          <div class="meta-item">
+            <mat-icon>person</mat-icon>
+            <div>
+              <span class="meta-label">Assigned to</span>
+              <span class="meta-value">{{ task.assigneeName || 'Unassigned' }}</span>
+            </div>
+          </div>
+
+          <div class="meta-item">
+            <mat-icon>calendar_today</mat-icon>
+            <div>
+              <span class="meta-label">Due date</span>
+              <span class="meta-value">
+                {{ task.dueDate ? (task.dueDate | date:'mediumDate') : 'No due date' }}
+              </span>
+            </div>
+          </div>
+
+          <div class="meta-item">
+            <mat-icon>schedule</mat-icon>
+            <div>
+              <span class="meta-label">Created</span>
+              <span class="meta-value">{{ task.createdAt | date:'medium' }}</span>
+            </div>
+          </div>
+
+          <div class="meta-item">
+            <mat-icon>update</mat-icon>
+            <div>
+              <span class="meta-label">Last updated</span>
+              <span class="meta-value">{{ task.updatedAt | date:'medium' }}</span>
+            </div>
+          </div>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Comments section -->
+    <mat-card class="comments-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon class="inline-icon">comment</mat-icon>
+          Comments ({{ comments.length }})
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+
+        <form [formGroup]="commentForm" (ngSubmit)="onSubmitComment()" class="comment-form">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Add a comment</mat-label>
+            <textarea matInput formControlName="body" rows="3"
+                      placeholder="Share an update or ask a question..."></textarea>
+          </mat-form-field>
+          <button mat-raised-button color="primary" type="submit"
+                  [disabled]="commentForm.invalid || isSubmittingComment">
+            <mat-spinner diameter="18" *ngIf="isSubmittingComment"></mat-spinner>
+            <span *ngIf="!isSubmittingComment">Post Comment</span>
+          </button>
+        </form>
+
+        <mat-divider></mat-divider>
+
+        <div class="loading-spinner small" *ngIf="isLoadingComments">
+          <mat-spinner diameter="30"></mat-spinner>
+        </div>
+
+        <div class="empty-comments" *ngIf="!isLoadingComments && comments.length === 0">
+          <mat-icon>chat_bubble_outline</mat-icon>
+          <p>No comments yet. Be the first to add one!</p>
+        </div>
+
+        <div class="comment-list" *ngIf="!isLoadingComments && comments.length > 0">
+          <div class="comment-item" *ngFor="let comment of comments">
+            <div class="comment-avatar">
+              {{ comment.authorName.charAt(0) }}
+            </div>
+            <div class="comment-body">
+              <div class="comment-header">
+                <span class="comment-author">{{ comment.authorName }}</span>
+                <span class="comment-date">{{ comment.createdAt | date:'short' }}</span>
+              </div>
+              <p class="comment-text">{{ comment.body }}</p>
+            </div>
+          </div>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>
