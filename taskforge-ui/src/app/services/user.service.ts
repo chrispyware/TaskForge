@@ -20,11 +20,11 @@ export class UserService {
     }
 
     searchUsers(query: string): Observable<User[]> {
-        return this.http.get<User[]>(`${this.apiUrl}/serach?q=${query}`);
+        return this.http.get<User[]>(`${this.apiUrl}/search?q=${query}`);
     }
 
     updateProfile(id: number, request: Partial<User>): Observable<User> {
-        return this.http.put<User>(`f${this.apiUrl}/${id}`, request);
+        return this.http.put<User>(`${this.apiUrl}/${id}`, request);
     }
 
     updatePassword(id: number, currentPassword: string, newPassword: string): Observable<User> {

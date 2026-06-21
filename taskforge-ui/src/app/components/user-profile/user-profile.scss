@@ -1,0 +1,31 @@
+.profile-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px;
+
+  h1 {
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+}
+
+.tab-card {
+  padding: 24px 0;
+  box-shadow: none;
+  border-radius: 0 0 4px 4px;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: #f44336;
+  font-size: 14px;
+  margin-bottom: 16px;
+  padding: 8px;
+  background-color: #ffebee;
+  border-radius: 4px;
+}
