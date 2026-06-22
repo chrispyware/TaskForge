@@ -1,0 +1,41 @@
+<mat-toolbar color="primary">
+  <span class="brand" routerLink="/dashboard">
+    <mat-icon>task_alt</mat-icon>
+    TaskForge
+  </span>
+
+  <span class="spacer"></span>
+
+  <nav class="nav-links">
+    <a mat-button routerLink="/dashboard">
+      <mat-icon>dashboard</mat-icon>
+      Dashboard
+    </a>
+    <a mat-button routerLink="/projects">
+      <mat-icon>folder</mat-icon>
+      Projects
+    </a>
+    <a mat-button routerLink="/admin/users" *ngIf="isAdmin()">
+      <mat-icon>admin_panel_settings</mat-icon>
+      Admin
+    </a>
+  </nav>
+
+  <button mat-button [matMenuTriggerFor]="userMenu">
+    <mat-icon>account_circle</mat-icon>
+    {{ currentUser?.displayName }}
+    <mat-icon>arrow_drop_down</mat-icon>
+  </button>
+
+  <mat-menu #userMenu="matMenu">
+    <a mat-menu-item routerLink="/profile">
+      <mat-icon>person</mat-icon>
+      Profile
+    </a>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Logout
+    </button>
+  </mat-menu>
+</mat-toolbar>

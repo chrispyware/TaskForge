@@ -31,15 +31,12 @@ See [db/README.md](db/README.md) for full instructions.
 ### Backend Setup
 1. Copy `taskforge-api/src/main/resources/application.yml.example`
    to `application.yml` and fill in your credentials
-2. Run `./mvnw spring-boot:run` from the `taskforge-api` folder
+2. Use the provided run script instead of mvnw directly:
+`build_deploy.cmd` 
+
+This sets the required JVM timezone argument for Oracle JDBC compatibility.
 
 ### Frontend Setup
 1. Run `npm install` from the `taskforge-ui` folder
 2. Run `ng serve`
 3. Open `http://localhost:4200`
-
-### Running the backend
-Use the provided run script instead of mvnw directly:
-`build_deploy.cmd`
-
-This sets the required JVM timezone argument for Oracle JDBC compatibility.
