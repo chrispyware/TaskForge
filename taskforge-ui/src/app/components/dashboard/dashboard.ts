@@ -89,6 +89,22 @@ export class Dashboard implements OnInit {
     this.router.navigate(['/projects', projectId, 'board']);
   }
 
+  navigateToProjects(): void {
+  this.router.navigate(['/projects']);
+  }
+
+  navigateToRecentTasks(): void {
+    this.router.navigate(['/tasks'], {
+      queryParams: { filter: 'recent' }
+    });
+  }
+
+  navigateToInProgressTasks(): void {
+    this.router.navigate(['/tasks'], {
+      queryParams: { filter: 'in-progress' }
+    });
+  }
+
   getPriorityColor(priority: string): string {
     switch (priority) {
       case 'CRITICAL': return 'warn';

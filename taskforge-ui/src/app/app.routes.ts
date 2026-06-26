@@ -9,6 +9,7 @@ import { ProjectForm } from './components/project-form/project-form';
 import { TaskBoard } from './components/task-board/task-board';
 import { TaskForm } from './components/task-form/task-form';
 import { TaskDetail } from './components/task-detail/task-detail';
+import { TaskList } from './components/task-list/task-list';
 import { UserProfile } from './components/user-profile/user-profile';
 import { AdminUsers } from './components/admin-users/admin-users';
 
@@ -35,6 +36,11 @@ export const routes: Routes = [
     path: 'projects/:id/board',
     component: TaskBoard,
     canActivate: [authGuard]
+  },
+  {
+  path: 'tasks',
+  component: TaskList,
+  canActivate: [authGuard]
   },
   {
     path: 'tasks/new',

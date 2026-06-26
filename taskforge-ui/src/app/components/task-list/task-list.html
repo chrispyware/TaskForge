@@ -1,0 +1,71 @@
+<app-navbar />
+
+<div class="task-list-container">
+
+  <div class="page-header">
+    <div class="page-title">
+      <h1>{{ getPageTitle() }}</h1>
+      <p>{{ getPageSubtitle() }}</p>
+    </div>
+
+    <button mat-button routerLink="/dashboard">
+      <mat-icon>arrow_back</mat-icon>
+      Dashboard
+    </button>
+  </div>
+
+  <div class="loading-spinner" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div class="empty-state" *ngIf="!isLoading && filteredTasks.length === 0">
+    <mat-icon>task_alt</mat-icon>
+    <h2>No tasks found</h2>
+    <p>There are no tasks matching this view.</p>
+  </div>
+
+  <div class="tasks-grid" *ngIf="!isLoading && filteredTasks.length > 0">
+    <mat-card
+      class="task-card"
+      *ngFor="let task of filteredTasks"
+      (click)="navigateToTask(task.id)">
+
+      <mat-card-header>
+        <mat-card-title>{{ task.title }}</mat-card-title>
+        <mat-card-subtitle>{{ task.projectName }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p class="task-description">
+          {{ task.description || 'No description provided' }}
+        </p>
+
+        <div class="task-meta">
+          <span class="meta-item">
+            <mat-icon>person</mat-icon>
+            {{ task.assigneeName || 'Unassigned' }}
+          </span>
+
+          <span class="meta-item" *ngIf="task.dueDate">
+            <mat-icon>calendar_today</mat-icon>
+            {{ task.dueDate | date:'mediumDate' }}
+          </span>
+        </div>
+      </mat-card-content>
+
+      <mat-divider></mat-divider>
+
+      <mat-card-actions>
+        <span class="status-badge" [class]="getStatusColor(task.status)">
+          {{ task.status.replace('_', ' ') }}
+        </span>
+
+        <span class="priority-badge" [class]="getPriorityColor(task.priority)">
+          {{ task.priority }}
+        </span>
+      </mat-card-actions>
+
+    </mat-card>
+  </div>
+
+</div>

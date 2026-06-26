@@ -140,3 +140,13 @@
   background: rgba(255, 255, 255, 0.06);
   color: var(--cw-text-muted);
 }
+
+.clickable-card {
+  cursor: pointer;
+  user-select: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--cw-green);
+    outline-offset: 4px;
+  }
+}
