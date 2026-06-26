@@ -1,168 +1,39 @@
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
-
-:root {
-  --cw-black: #020403;
-  --cw-ink: #07110c;
-  --cw-panel: #0b1510;
-  --cw-panel-strong: #101d17;
-  --cw-line: rgba(115, 255, 178, 0.2);
-  --cw-line-strong: rgba(115, 255, 178, 0.42);
-  --cw-green: #73ffb2;
-  --cw-green-strong: #25f17b;
-  --cw-green-soft: rgba(115, 255, 178, 0.12);
-  --cw-text: #f5fff8;
-  --cw-text-muted: #a9b8af;
-  --cw-text-dim: #6d7b72;
-  --cw-danger: #ff6b7a;
-  --cw-warning: #ffd166;
-  --cw-info: #6ee7ff;
-  --cw-radius: 18px;
-  --cw-radius-sm: 10px;
-  --cw-shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
-  --cw-glow: 0 0 26px rgba(115, 255, 178, 0.2);
-  --cw-font-mono: 'Cascadia Code', 'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
-  --cw-font-sans: Inter, Roboto, 'Helvetica Neue', Arial, sans-serif;
-}
 
 html {
   height: 100%;
-  color-scheme: dark;
-
   @include mat.theme(
     (
       color: (
-        primary: mat.$green-palette,
-        tertiary: mat.$cyan-palette,
-        theme-type: dark,
+        primary: mat.$magenta-palette,
+        tertiary: mat.$violet-palette,
       ),
-      typography: var(--cw-font-sans),
+      typography: Roboto,
       density: 0,
     )
   );
 }
 
-* {
-  box-sizing: border-box;
-}
-
 body {
-  min-height: 100%;
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  // Reset the user agent margin.
   margin: 0;
-  background:
-    radial-gradient(circle at top left, rgba(37, 241, 123, 0.16), transparent 32rem),
-    radial-gradient(circle at bottom right, rgba(110, 231, 255, 0.08), transparent 28rem),
-    linear-gradient(135deg, #020403 0%, #07110c 48%, #020403 100%);
-  color: var(--cw-text);
-  font-family: var(--cw-font-sans);
+  height: 100%;
 }
-
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(115, 255, 178, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(115, 255, 178, 0.045) 1px, transparent 1px);
-  background-size: 42px 42px;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 78%);
-  z-index: -1;
-}
-
-a {
-  color: var(--cw-green);
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
-}
-
-h1,
-h2,
-h3,
-.mat-mdc-card-title {
-  letter-spacing: -0.03em;
-}
-
-h1::before,
-h2::before {
-  content: '> ';
-  color: var(--cw-green);
-  font-family: var(--cw-font-mono);
-  font-weight: 700;
-  text-shadow: var(--cw-glow);
-}
-
-code,
-pre,
-.terminal-text {
-  font-family: var(--cw-font-mono);
-}
-
-.mat-mdc-card {
-  background: linear-gradient(180deg, rgba(16, 29, 23, 0.96), rgba(8, 15, 11, 0.96)) !important;
-  border: 1px solid var(--cw-line) !important;
-  border-radius: var(--cw-radius) !important;
-  box-shadow: var(--cw-shadow) !important;
-  color: var(--cw-text) !important;
-  backdrop-filter: blur(12px);
-}
-
-.mat-mdc-card-subtitle,
-.mat-mdc-card-content,
-.mat-mdc-form-field-hint,
-.mat-mdc-input-element::placeholder {
-  color: var(--cw-text-muted) !important;
-}
-
-.mat-mdc-raised-button.mat-primary,
-.mat-mdc-unelevated-button.mat-primary,
-.mat-mdc-fab.mat-primary,
-.mat-mdc-mini-fab.mat-primary {
-  box-shadow: 0 0 0 1px rgba(115, 255, 178, 0.26), 0 14px 34px rgba(37, 241, 123, 0.22) !important;
-}
-
-.mat-mdc-outlined-button {
-  border-color: var(--cw-line-strong) !important;
-}
-
-.mat-mdc-form-field {
-  --mdc-outlined-text-field-outline-color: var(--cw-line);
-  --mdc-outlined-text-field-hover-outline-color: var(--cw-green);
-  --mdc-outlined-text-field-focus-outline-color: var(--cw-green);
-  --mdc-outlined-text-field-input-text-color: var(--cw-text);
-  --mdc-outlined-text-field-label-text-color: var(--cw-text-muted);
-  --mdc-outlined-text-field-focus-label-text-color: var(--cw-green);
-}
-
-.mat-mdc-chip {
-  font-family: var(--cw-font-mono) !important;
-  letter-spacing: 0.02em;
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.04);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(115, 255, 178, 0.32);
-  border-radius: 999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(115, 255, 178, 0.5);
-}
-
-.cw-shell {
-  border: 1px solid var(--cw-line);
-  border-radius: var(--cw-radius);
-  background: rgba(5, 12, 8, 0.72);
-  box-shadow: var(--cw-shadow);
-}
+/* You can add global styles to this file, and also import other style files */
