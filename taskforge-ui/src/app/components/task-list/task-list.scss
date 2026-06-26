@@ -1,0 +1,132 @@
+.task-list-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}
+
+.tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 22px;
+}
+
+.task-card {
+  cursor: pointer;
+
+  mat-card-title {
+    font-family: var(--cw-font-mono);
+  }
+
+  .task-description {
+    color: var(--cw-text-muted);
+    line-height: 1.6;
+    min-height: 48px;
+  }
+
+  .task-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+    font-family: var(--cw-font-mono);
+    font-size: 12px;
+    color: var(--cw-text-dim);
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  mat-icon {
+    color: var(--cw-green);
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.status-badge,
+.priority-badge {
+  font-family: var(--cw-font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 11px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  border: 1px solid var(--cw-line);
+}
+
+.status-badge {
+  &.done {
+    color: var(--cw-green);
+    background: rgba(115, 255, 178, 0.14);
+  }
+
+  &.in-progress {
+    color: var(--cw-info);
+    background: rgba(110, 231, 255, 0.12);
+  }
+
+  &.review {
+    color: var(--cw-warning);
+    background: rgba(255, 209, 102, 0.12);
+  }
+
+  &.todo {
+    color: var(--cw-text-muted);
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
+.priority-badge {
+  &.critical {
+    color: var(--cw-danger);
+    background: rgba(255, 107, 122, 0.12);
+  }
+
+  &.high {
+    color: var(--cw-warning);
+    background: rgba(255, 209, 102, 0.12);
+  }
+
+  &.medium {
+    color: var(--cw-info);
+    background: rgba(110, 231, 255, 0.12);
+  }
+
+  &.low {
+    color: var(--cw-text-muted);
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
+.empty-state {
+  display: grid;
+  place-items: center;
+  padding: 64px 24px;
+  color: var(--cw-text-muted);
+  border: 1px dashed var(--cw-line);
+  border-radius: var(--cw-radius);
+  background: rgba(115, 255, 178, 0.04);
+
+  mat-icon {
+    color: var(--cw-green);
+    font-size: 70px;
+    width: 70px;
+    height: 70px;
+  }
+
+  h2 {
+    color: var(--cw-text);
+    font-family: var(--cw-font-mono);
+  }
+}

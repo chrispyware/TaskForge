@@ -34,7 +34,11 @@
         </mat-card-content>
       </mat-card>
 
-      <mat-card class="stat-card">
+      <mat-card class="stat-card clickable-card"
+          role="button"
+          tabindex="0"
+          (click)="navigateToRecentTasks()"
+          (keydown.enter)="navigateToRecentTasks()">
         <mat-card-content>
           <div class="stat">
             <mat-icon color="accent">task_alt</mat-icon>
@@ -46,7 +50,11 @@
         </mat-card-content>
       </mat-card>
 
-      <mat-card class="stat-card">
+      <mat-card class="stat-card clickable-card"
+          role="button"
+          tabindex="0"
+          (click)="navigateToInProgressTasks()"
+          (keydown.enter)="navigateToInProgressTasks()">
         <mat-card-content>
           <div class="stat">
             <mat-icon color="warn">pending</mat-icon>
