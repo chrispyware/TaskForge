@@ -1,19 +1,17 @@
 .profile-container {
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 32px;
 
   h1 {
-    font-size: 28px;
-    font-weight: 500;
-    margin-bottom: 24px;
+    margin: 0 0 26px;
+    font-family: var(--cw-font-mono);
   }
 }
 
 .tab-card {
-  padding: 24px 0;
-  box-shadow: none;
-  border-radius: 0 0 4px 4px;
+  margin-top: 18px;
+  padding: 28px;
 }
 
 .full-width {
@@ -22,10 +20,28 @@
 }
 
 .error-message {
-  color: #f44336;
-  font-size: 14px;
   margin-bottom: 16px;
-  padding: 8px;
-  background-color: #ffebee;
-  border-radius: 4px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 107, 122, 0.45);
+  border-radius: var(--cw-radius-sm);
+  background: rgba(255, 107, 122, 0.1);
+  color: var(--cw-danger);
+  font-family: var(--cw-font-mono);
+  font-size: 13px;
+}
+
+:host ::ng-deep .mat-mdc-tab-group {
+  border: 1px solid var(--cw-line);
+  border-radius: var(--cw-radius);
+  background: rgba(5, 12, 8, 0.55);
+  box-shadow: var(--cw-shadow);
+  overflow: hidden;
+}
+
+:host ::ng-deep .mat-mdc-tab-labels {
+  background: rgba(115, 255, 178, 0.04);
+}
+
+:host ::ng-deep .mdc-tab__text-label {
+  font-family: var(--cw-font-mono);
 }
