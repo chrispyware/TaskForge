@@ -9,9 +9,9 @@
   <div *ngIf="!isLoading">
 
     <!-- Welcome header -->
-    <div class="welcome-header">
+    <div class="page-header welcome-header">
       <div class="welcome-text">
-        <h1>Welcome back, {{ currentUser?.displayName }}!</h1>
+        <h1>Welcome back, {{ currentUser?.displayName }}</h1>
         <p>Here's what's happening with your projects today.</p>
       </div>
       <button mat-raised-button color="primary" routerLink="/projects/new">

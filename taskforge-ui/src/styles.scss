@@ -166,3 +166,57 @@ pre,
   background: rgba(5, 12, 8, 0.72);
   box-shadow: var(--cw-shadow);
 }
+
+/* ==========================================================
+   Reusable Components
+   ========================================================== */
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 32px;
+
+  .header-text,
+  .welcome-text,
+  .board-title,
+  .page-title {
+    flex: 1;
+  }
+
+  h1 {
+    margin: 0 0 8px;
+    font-family: var(--cw-font-mono);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--cw-text);
+
+    &::before {
+      content: "> ";
+      color: var(--cw-green);
+    }
+
+    &::after {
+      content: "_";
+      color: var(--cw-green);
+      animation: cursor-blink 1.15s steps(2, start) infinite;
+    }
+  }
+
+  p {
+    margin: 0;
+    color: var(--cw-text-muted);
+    line-height: 1.6;
+    font-size: .95rem;
+  }
+}
+
+@keyframes cursor-blink {
+
+  50% {
+    opacity: 0;
+  }
+
+}
