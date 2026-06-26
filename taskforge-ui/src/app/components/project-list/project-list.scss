@@ -23,13 +23,6 @@
 
 .project-card {
   cursor: pointer;
-  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
-
-  &:hover {
-    transform: translateY(-6px);
-    border-color: var(--cw-green) !important;
-    box-shadow: var(--cw-shadow), var(--cw-glow) !important;
-  }
 
   .project-icon {
     color: var(--cw-green);

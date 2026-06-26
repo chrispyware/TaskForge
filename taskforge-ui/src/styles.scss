@@ -220,3 +220,62 @@ pre,
   }
 
 }
+
+/* ==========================================================
+   Reusable Glass Surface System
+   ========================================================== */
+
+.cw-panel,
+.mat-mdc-card {
+  background:
+    linear-gradient(180deg, rgba(16, 29, 23, 0.92), rgba(5, 12, 8, 0.9)) !important;
+  border: 1px solid var(--cw-line) !important;
+  border-radius: var(--cw-radius) !important;
+  box-shadow: var(--cw-shadow) !important;
+  color: var(--cw-text) !important;
+  backdrop-filter: blur(14px);
+}
+
+.cw-panel {
+  padding: 24px;
+}
+
+.cw-panel-hover,
+.project-card,
+.stat-card,
+.task-card,
+.comments-card,
+.login-card,
+.register-card,
+.tab-card {
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+}
+
+.cw-panel-hover:hover,
+.project-card:hover,
+.stat-card:hover,
+.task-card:hover,
+.comments-card:hover,
+.login-card:hover,
+.register-card:hover,
+.tab-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--cw-line-strong) !important;
+  box-shadow: var(--cw-shadow), var(--cw-glow) !important;
+}
+
+.mat-mdc-card-header {
+  padding-bottom: 12px;
+}
+
+.mat-mdc-card-content {
+  color: var(--cw-text-muted);
+}
+
+.mat-mdc-card-actions {
+  padding: 16px !important;
+}

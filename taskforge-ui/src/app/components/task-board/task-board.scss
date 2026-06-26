@@ -57,6 +57,7 @@
   background:
     linear-gradient(180deg, rgba(16, 29, 23, 0.92), rgba(5, 12, 8, 0.88)) !important;
   box-shadow: var(--cw-shadow);
+  backdrop-filter: blur(14px);
 }
 
 .column-header {
