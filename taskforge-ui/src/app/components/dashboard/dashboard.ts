@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ProjectService } from '../../services/project.service';
-import { TaskService } from '../../services/task.service';
+import { TaskQueryService } from '../../services/task-query.service';
 import { Project } from '../../models/project';
 import { Task } from '../../models/task';
 import { Navbar } from '../navbar/navbar';
@@ -41,7 +41,7 @@ export class Dashboard implements OnInit {
   constructor(
     private authService: AuthService,
     private projectService: ProjectService,
-    private taskService: TaskService,
+    private taskQueryService: TaskQueryService,
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {}
@@ -53,10 +53,10 @@ export class Dashboard implements OnInit {
 
   loadDashboardData(): void {
     this.projectService.getProjects().subscribe({
-      next: (projects) => {
-        this.projects = projects;
-        this.loadRecentTasks();
-      },
+    next: projects => {
+      this.projects = projects;
+      this.loadRecentTasks();
+    },
       error: () => {
         this.isLoading = false;
         this.cdr.detectChanges();
@@ -65,14 +65,7 @@ export class Dashboard implements OnInit {
   }
 
   loadRecentTasks(): void {
-    if (this.projects.length === 0) {
-      this.isLoading = false;
-      this.cdr.detectChanges();
-      return;
-    }
-
-    const firstProjectId = this.projects[0].id;
-    this.taskService.getTasksByProjectId(firstProjectId).subscribe({
+    this.taskQueryService.getRecentTasks(5).subscribe({
       next: (tasks) => {
         this.recentTasks = tasks.slice(0, 5);
         this.isLoading = false;

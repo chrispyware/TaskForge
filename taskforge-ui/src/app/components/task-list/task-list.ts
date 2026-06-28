@@ -1,13 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { forkJoin, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 
 import { Navbar } from '../navbar/navbar';
 import { AuthService } from '../../services/auth.service';
-import { ProjectService } from '../../services/project.service';
-import { TaskService } from '../../services/task.service';
+import { TaskQueryService } from '../../services/task-query.service';
 import { Task } from '../../models/task';
 
 import { MatCardModule } from '@angular/material/card';
@@ -42,8 +39,7 @@ export class TaskList implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private projectService: ProjectService,
-    private taskService: TaskService,
+    private taskQueryService: TaskQueryService,
     private route: ActivatedRoute,
     private router: Router,
     private cdr: ChangeDetectorRef
@@ -61,37 +57,13 @@ export class TaskList implements OnInit {
   loadTasks(): void {
     this.isLoading = true;
 
-    this.projectService.getProjects().subscribe({
-      next: projects => {
-        if (projects.length === 0) {
-          this.tasks = [];
-          this.filteredTasks = [];
-          this.isLoading = false;
-          this.cdr.detectChanges();
-          return;
-        }
-
-        const taskRequests = projects.map(project =>
-          this.taskService.getTasksByProjectId(project.id).pipe(
-            catchError(() => of([] as Task[]))
-          )
-        );
-
-        forkJoin(taskRequests).subscribe({
-          next: taskGroups => {
-            this.tasks = taskGroups.flat();
-            this.applyFilter();
-            this.isLoading = false;
-            this.cdr.detectChanges();
-          },
-          error: () => {
-            this.tasks = [];
-            this.filteredTasks = [];
-            this.isLoading = false;
-            this.cdr.detectChanges();
-          }
-        });
-      },
+  this.taskQueryService.getAllProjectTasks().subscribe({
+    next: tasks => {
+      this.tasks = tasks;
+      this.applyFilter();
+      this.isLoading = false;
+      this.cdr.detectChanges();
+    },
       error: () => {
         this.tasks = [];
         this.filteredTasks = [];
@@ -102,27 +74,17 @@ export class TaskList implements OnInit {
   }
 
   applyFilter(): void {
-    const assignedTasks = this.tasks.filter(task =>
-      task.assignedToId === this.currentUser?.id
-    );
-
     if (this.filter === 'in-progress') {
-      this.filteredTasks = assignedTasks
-        .filter(task => task.status === 'IN_PROGRESS')
-        .sort((a, b) => this.sortNewestFirst(a, b));
+      this.filteredTasks = this.taskQueryService.getInProgressTasksFrom(this.tasks);
       return;
     }
 
     if (this.filter === 'recent') {
-      this.filteredTasks = assignedTasks
-        .sort((a, b) => this.sortNewestFirst(a, b))
-        .slice(0, 10);
+      this.filteredTasks = this.taskQueryService.getRecentTasksFrom(this.tasks, 10);
       return;
     }
 
-    this.filteredTasks = assignedTasks.sort((a, b) =>
-      this.sortNewestFirst(a, b)
-    );
+    this.filteredTasks = this.taskQueryService.getRecentTasksFrom(this.tasks);
   }
 
   navigateToTask(taskId: number): void {
@@ -143,11 +105,11 @@ export class TaskList implements OnInit {
 
   getPageSubtitle(): string {
     if (this.filter === 'in-progress') {
-      return 'Tasks currently in progress and assigned to you.';
+      return 'Tasks currently in progress across all of your projects.';
     }
 
     if (this.filter === 'recent') {
-      return 'Your most recently updated assigned tasks.';
+      return 'Recently updated tasks across all of your projects.';
     }
 
     return 'All tasks currently assigned to you.';
