@@ -112,7 +112,7 @@ export class TaskList implements OnInit {
       return 'Recently updated tasks across all of your projects.';
     }
 
-    return 'All tasks currently assigned to you.';
+    return 'All tasks across your projects.';
   }
 
   getStatusColor(status: string): string {
