@@ -63,13 +63,37 @@
 
         <div class="form-row">
           <mat-form-field appearance="outline" class="half-width">
-            <mat-label>Assign To</mat-label>
-            <mat-select formControlName="assignedToId">
-              <mat-option [value]="null">Unassigned</mat-option>
-              <mat-option *ngFor="let user of users" [value]="user.id">
+            <mat-label>Search for users</mat-label>
+
+            <input
+              matInput
+              name="assigneeSearch"
+              [(ngModel)]="assigneeSearch"
+              [ngModelOptions]="{ standalone: true }"
+              [matAutocomplete]="assigneeAuto"
+              placeholder="Search users"
+              (input)="filterAssignees()">
+
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              *ngIf="assigneeSearch"
+              (click)="clearAssignee()"
+              aria-label="Clear assignee">
+              <mat-icon>close</mat-icon>
+            </button>
+
+            <mat-autocomplete #assigneeAuto="matAutocomplete">
+              <mat-option
+                *ngFor="let user of filteredUsers"
+                [value]="user.displayName"
+                (onSelectionChange)="selectAssignee(user)">
                 {{ user.displayName }}
               </mat-option>
-            </mat-select>
+            </mat-autocomplete>
+
+            <mat-hint>Start typing to search users</mat-hint>
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="half-width">
