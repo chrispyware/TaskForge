@@ -98,11 +98,41 @@
   }
 
   .task-badges {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 110px 110px;
+    justify-content: end;
     gap: 8px;
-    min-width: 220px;
+  }
+}
+
+.task-sort-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 120px 110px 110px;
+  gap: 12px;
+  align-items: center;
+  padding: 0 0 12px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--cw-line);
+
+  button {
+    justify-content: flex-start;
+    color: var(--cw-text-muted);
+    font-family: var(--cw-font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+
+    &:hover {
+      color: var(--cw-green);
+      background: var(--cw-green-soft);
+    }
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      margin-left: 4px;
+    }
   }
 }
 
