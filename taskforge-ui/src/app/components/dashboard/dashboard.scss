@@ -75,24 +75,64 @@
 
 .task-row {
   padding: 14px 0;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 18px;
   align-items: center;
 
+  .task-info {
+    min-width: 0;
+  }
+
   .task-title {
+    display: block;
     font-weight: 700;
+    margin-bottom: 4px;
   }
 
   .task-project {
+    display: block;
     color: var(--cw-text-muted);
     font-family: var(--cw-font-mono);
     font-size: 12px;
   }
 
   .task-badges {
-    display: flex;
+    display: grid;
+    grid-template-columns: 110px 110px;
+    justify-content: end;
     gap: 8px;
+  }
+}
+
+.task-sort-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 120px 110px 110px;
+  gap: 12px;
+  align-items: center;
+  padding: 0 0 12px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--cw-line);
+
+  button {
+    justify-content: flex-start;
+    color: var(--cw-text-muted);
+    font-family: var(--cw-font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+
+    &:hover {
+      color: var(--cw-green);
+      background: var(--cw-green-soft);
+    }
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      margin-left: 4px;
+    }
   }
 }
 

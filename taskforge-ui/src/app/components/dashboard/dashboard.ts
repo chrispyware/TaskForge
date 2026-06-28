@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ProjectService } from '../../services/project.service';
-import { TaskService } from '../../services/task.service';
+import { TaskQueryService } from '../../services/task-query.service';
 import { Project } from '../../models/project';
 import { Task } from '../../models/task';
 import { Navbar } from '../navbar/navbar';
@@ -14,6 +14,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
+
+type RecentTaskSortField = 'title' | 'projectName' | 'status' | 'priority';
+type SortDirection = 'asc' | 'desc';
 
 @Component({
   selector: 'app-dashboard',
@@ -37,11 +40,13 @@ export class Dashboard implements OnInit {
   projects: Project[] = [];
   recentTasks: Task[] = [];
   isLoading = true;
+  recentTaskSortField: RecentTaskSortField = 'title';
+  recentTaskSortDirection: SortDirection = 'asc';
 
   constructor(
     private authService: AuthService,
     private projectService: ProjectService,
-    private taskService: TaskService,
+    private taskQueryService: TaskQueryService,
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {}
@@ -53,10 +58,10 @@ export class Dashboard implements OnInit {
 
   loadDashboardData(): void {
     this.projectService.getProjects().subscribe({
-      next: (projects) => {
-        this.projects = projects;
-        this.loadRecentTasks();
-      },
+    next: projects => {
+      this.projects = projects;
+      this.loadRecentTasks();
+    },
       error: () => {
         this.isLoading = false;
         this.cdr.detectChanges();
@@ -65,16 +70,9 @@ export class Dashboard implements OnInit {
   }
 
   loadRecentTasks(): void {
-    if (this.projects.length === 0) {
-      this.isLoading = false;
-      this.cdr.detectChanges();
-      return;
-    }
-
-    const firstProjectId = this.projects[0].id;
-    this.taskService.getTasksByProjectId(firstProjectId).subscribe({
+    this.taskQueryService.getRecentTasks(5).subscribe({
       next: (tasks) => {
-        this.recentTasks = tasks.slice(0, 5);
+        this.recentTasks = tasks;
         this.isLoading = false;
         this.cdr.detectChanges();
       },
@@ -85,12 +83,90 @@ export class Dashboard implements OnInit {
     });
   }
 
+  get sortedRecentTasks(): Task[] {
+    return [...this.recentTasks].sort((a, b) => {
+      const direction = this.recentTaskSortDirection === 'asc' ? 1 : -1;
+
+      if (this.recentTaskSortField === 'priority') {
+        return (
+          this.getPriorityRank(a.priority) - this.getPriorityRank(b.priority)
+        ) * direction || this.compareByTitle(a, b);
+      }
+
+      if (this.recentTaskSortField === 'status') {
+        return (
+          this.getStatusRank(a.status) - this.getStatusRank(b.status)
+        ) * direction || this.compareByTitle(a, b);
+      }
+
+      if (this.recentTaskSortField === 'projectName') {
+        const projectCompare = this.compareStrings(a.projectName, b.projectName) * direction;
+        return projectCompare || this.compareByTitle(a, b);
+      }
+
+      const aValue = String(a[this.recentTaskSortField] ?? '').toLowerCase();
+      const bValue = String(b[this.recentTaskSortField] ?? '').toLowerCase();
+
+      return aValue.localeCompare(bValue) * direction;
+    });
+  }
+
+  sortRecentTasks(field: RecentTaskSortField): void {
+    if (this.recentTaskSortField === field) {
+      this.recentTaskSortDirection = this.recentTaskSortDirection === 'asc' ? 'desc' : 'asc';
+      return;
+    }
+
+    this.recentTaskSortField = field;
+    this.recentTaskSortDirection = 'asc';
+  }
+
+  getSortIcon(field: RecentTaskSortField): string {
+    if (this.recentTaskSortField !== field) {
+      return 'unfold_more';
+    }
+
+    return this.recentTaskSortDirection === 'asc'
+    ? 'keyboard_arrow_up'
+    : 'keyboard_arrow_down';
+  }
+
+  private getPriorityRank(priority: string): number {
+    switch (priority) {
+      case 'CRITICAL': return 1;
+      case 'HIGH': return 2;
+      case 'MEDIUM': return 3;
+      case 'LOW': return 4;
+      default: return 5;
+    }
+  }
+
+  private getStatusRank(status: string): number {
+    switch (status) {
+      case 'TODO': return 1;
+      case 'IN_PROGRESS': return 2;
+      case 'REVIEW': return 3;
+      case 'DONE': return 4;
+      default: return 5;
+    }
+  }
+
+  private compareByTitle(a: Task, b: Task): number {
+    return this.compareStrings(a.title, b.title);
+  }
+
+  private compareStrings(a?: string, b?: string): number {
+    return String(a ?? '').toLowerCase().localeCompare(
+      String(b ?? '').toLowerCase()
+    );
+  }
+
   navigateToBoard(projectId: number): void {
     this.router.navigate(['/projects', projectId, 'board']);
   }
 
   navigateToProjects(): void {
-  this.router.navigate(['/projects']);
+    this.router.navigate(['/projects']);
   }
 
   navigateToRecentTasks(): void {

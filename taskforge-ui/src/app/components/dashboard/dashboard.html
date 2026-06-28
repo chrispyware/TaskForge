@@ -22,7 +22,11 @@
 
     <!-- Stats row -->
     <div class="stats-row">
-      <mat-card class="stat-card">
+      <mat-card class="stat-card clickable-card"
+          role="button"
+          tabindex="0"
+          (click)="navigateToProjects()"
+          (keydown.enter)="navigateToProjects()">
         <mat-card-content>
           <div class="stat">
             <mat-icon color="primary">folder</mat-icon>
@@ -111,14 +115,33 @@
 
       <mat-card>
         <mat-card-content>
-          <div class="task-row" *ngFor="let task of recentTasks; let last = last">
+          <div class="task-sort-bar">
+            <button mat-button type="button" (click)="sortRecentTasks('title')">
+              Task
+              <mat-icon>{{ getSortIcon('title') }}</mat-icon>
+            </button>
+
+            <button mat-button type="button" (click)="sortRecentTasks('projectName')">
+              Project
+              <mat-icon>{{ getSortIcon('projectName') }}</mat-icon>
+            </button>
+            <button mat-button type="button" (click)="sortRecentTasks('status')">
+              Status
+              <mat-icon>{{ getSortIcon('status') }}</mat-icon>
+            </button>
+            <button mat-button type="button" (click)="sortRecentTasks('priority')">
+              Priority
+              <mat-icon>{{ getSortIcon('priority') }}</mat-icon>
+            </button>
+          </div>
+          <div class="task-row" *ngFor="let task of sortedRecentTasks; let last = last">
             <div class="task-info">
-              <span class="task-title">{{ task.title }}</span>
+              <span class="task-title">{{ task.title }} </span>
               <span class="task-project">{{ task.projectName }}</span>
             </div>
             <div class="task-badges">
               <mat-chip [class]="getStatusColor(task.status)">
-                {{ task.status | titlecase }}
+                {{ task.status.replace('_', ' ') | titlecase }}
               </mat-chip>
               <mat-chip [color]="getPriorityColor(task.priority)">
                 {{ task.priority | titlecase }}
