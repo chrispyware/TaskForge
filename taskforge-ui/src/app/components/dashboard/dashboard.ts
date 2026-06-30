@@ -6,6 +6,7 @@ import { TaskQueryService } from '../../services/task-query.service';
 import { Project } from '../../models/project';
 import { Task } from '../../models/task';
 import { Navbar } from '../navbar/navbar';
+import { EmptyState } from '../shared/empty-state/empty-state';
 import { TasksByStatusPipe } from '../../pipes/tasks-by-status-pipe';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -24,6 +25,7 @@ type SortDirection = 'asc' | 'desc';
     CommonModule,
     RouterLink,
     Navbar,
+    EmptyState,
     TasksByStatusPipe,
     MatCardModule,
     MatButtonModule,

@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
 import { Navbar } from '../navbar/navbar';
+import { EmptyState } from '../shared/empty-state/empty-state';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
@@ -18,6 +19,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     Navbar,
+    EmptyState,
     MatCardModule,
     MatTableModule,
     MatIconModule,

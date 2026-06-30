@@ -1,0 +1,19 @@
+<section class="cw-empty-state">
+  <div class="empty-icon-shell">
+    <mat-icon>{{ icon }}</mat-icon>
+  </div>
+
+  <div class="empty-copy">
+    <h2>{{ title }}</h2>
+    <p>{{ message }}</p>
+  </div>
+
+  <a
+    *ngIf="actionLabel && actionRoute"
+    mat-raised-button
+    color="primary"
+    [routerLink]="actionRoute">
+    <mat-icon>{{ actionIcon }}</mat-icon>
+    {{ actionLabel }}
+  </a>
+</section>

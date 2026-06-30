@@ -57,10 +57,12 @@
 
     </table>
 
-    <div class="empty-state" *ngIf="filteredUsers.length === 0">
-      <mat-icon>person_search</mat-icon>
-      <p>No users found matching your search</p>
-    </div>
+    <app-empty-state
+      *ngIf="!isLoading && filteredUsers.length === 0"
+      icon="group_off"
+      title="No Users Found"
+      message="No users match your current search. Try adjusting the search term.">
+    </app-empty-state>
   </mat-card>
 
 </div>

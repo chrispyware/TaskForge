@@ -19,17 +19,17 @@
       </button>
     </div>
 
-    <div class="empty-state" *ngIf="projects.length === 0">
-      <mat-icon>folder_open</mat-icon>
-      <h2>No projects yet</h2>
-      <p>Create your first project to start organizing your tasks</p>
-      <button mat-raised-button color="primary" routerLink="/projects/new">
-        <mat-icon>add</mat-icon>
-        Create your first project
-      </button>
-    </div>
+    <app-empty-state
+      *ngIf="!isLoading && projects.length === 0"
+      icon="folder_open"
+      title="No Projects Yet"
+      message="Create your first project to start organizing your tasks."
+      actionLabel="Create your first project"
+      actionIcon="add"
+      actionRoute="/projects/new">
+    </app-empty-state>
 
-    <div class="projects-grid" *ngIf="projects.length > 0">
+    <div class="projects-grid" *ngIf="!isLoading && projects.length > 0">
       <mat-card class="project-card"
                 *ngFor="let project of projects"
                 (click)="navigateToBoard(project.id)">
