@@ -7,6 +7,7 @@ import { AuthService } from '../../services/auth.service';
 import { TaskQueryService } from '../../services/task-query.service';
 import { Task } from '../../models/task';
 import { EmptyState } from '../shared/empty-state/empty-state';
+import { Loading } from '../shared/loading/loading';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,6 +23,7 @@ import { MatDividerModule } from '@angular/material/divider';
     RouterLink,
     Navbar,
     EmptyState,
+    Loading,
     MatCardModule,
     MatButtonModule,
     MatIconModule,

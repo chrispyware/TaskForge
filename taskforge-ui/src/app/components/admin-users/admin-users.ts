@@ -3,6 +3,7 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
 import { Navbar } from '../navbar/navbar';
 import { EmptyState } from '../shared/empty-state/empty-state';
+import { Loading } from '../shared/loading/loading';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
@@ -20,6 +21,7 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     Navbar,
     EmptyState,
+    Loading,
     MatCardModule,
     MatTableModule,
     MatIconModule,

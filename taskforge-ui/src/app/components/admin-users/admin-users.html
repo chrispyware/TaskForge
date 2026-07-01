@@ -16,9 +16,10 @@
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
 
-  <div class="loading-spinner" *ngIf="isLoading">
-    <mat-spinner></mat-spinner>
-  </div>
+  <app-loading
+    *ngIf="isLoading"
+    message="Loading Users...">
+  </app-loading>
 
   <mat-card *ngIf="!isLoading">
     <table mat-table [dataSource]="filteredUsers" class="users-table">

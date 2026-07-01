@@ -7,6 +7,7 @@ import { Project } from '../../models/project';
 import { Task } from '../../models/task';
 import { Navbar } from '../navbar/navbar';
 import { EmptyState } from '../shared/empty-state/empty-state';
+import { Loading } from '../shared/loading/loading';
 import { TasksByStatusPipe } from '../../pipes/tasks-by-status-pipe';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -26,6 +27,7 @@ type SortDirection = 'asc' | 'desc';
     RouterLink,
     Navbar,
     EmptyState,
+    Loading,
     TasksByStatusPipe,
     MatCardModule,
     MatButtonModule,

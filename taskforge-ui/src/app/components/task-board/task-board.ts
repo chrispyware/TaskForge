@@ -6,6 +6,7 @@ import { Task } from '../../models/task';
 import { Project } from '../../models/project';
 import { Navbar } from '../navbar/navbar';
 import { EmptyState } from '../shared/empty-state/empty-state';
+import { Loading } from '../shared/loading/loading';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,6 +25,7 @@ import { DragDropModule, CdkDragDrop, moveItemInArray, transferArrayItem } from 
     RouterLink,
     Navbar,
     EmptyState,
+    Loading,
     MatCardModule,
     MatButtonModule,
     MatIconModule,

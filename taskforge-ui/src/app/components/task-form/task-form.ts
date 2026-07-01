@@ -6,6 +6,7 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
 import { Task } from '../../models/task';
 import { Navbar } from '../navbar/navbar';
+import { Loading } from '../shared/loading/loading';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -26,6 +27,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ReactiveFormsModule,
     FormsModule,
     Navbar,
+    Loading,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,

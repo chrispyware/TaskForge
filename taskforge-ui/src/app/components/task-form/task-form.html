@@ -13,9 +13,10 @@
       </mat-card-subtitle>
     </mat-card-header>
 
-    <div class="loading-spinner" *ngIf="isLoading && isEditMode">
-      <mat-spinner diameter="40"></mat-spinner>
-    </div>
+    <app-loading
+      *ngIf="isLoading"
+      message="Loading Task...">
+    </app-loading>
 
     <mat-card-content *ngIf="!isLoading || !isEditMode">
       <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
