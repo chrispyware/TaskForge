@@ -9,6 +9,11 @@
       <mat-card-subtitle>Set up a new project to organize your tasks</mat-card-subtitle>
     </mat-card-header>
 
+    <app-loading
+      *ngIf="isLoading"
+      message="Loading Project...">
+    </app-loading>
+
     <mat-card-content>
       <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
 

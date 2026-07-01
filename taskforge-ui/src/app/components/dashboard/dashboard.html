@@ -2,9 +2,10 @@
 
 <div class="dashboard-container">
 
-  <div class="loading-spinner" *ngIf="isLoading">
-    <mat-spinner></mat-spinner>
-  </div>
+  <app-loading
+    *ngIf="isLoading"
+    message="Loading Dashboard...">
+  </app-loading>
 
   <div *ngIf="!isLoading">
 
@@ -80,15 +81,17 @@
         <a mat-button color="primary" routerLink="/projects">View all</a>
       </div>
 
-      <div class="empty-state" *ngIf="projects.length === 0">
-        <mat-icon>folder_open</mat-icon>
-        <p>No projects yet. Create your first project to get started!</p>
-        <button mat-raised-button color="primary" routerLink="/projects/new">
-          Create Project
-        </button>
-      </div>
+      <app-empty-state 
+        *ngIf="!isLoading && projects.length === 0"
+        icon="folder_open"
+        title="No Projects Yet"
+        message="Create your first project to start building your workspace."
+        actionLabel="Create your first project"
+        actionIcon="add"
+        actionRoute="/projects/new">
+      </app-empty-state>
 
-      <div class="projects-grid" *ngIf="projects.length > 0">
+      <div class="projects-grid" *ngIf="!isLoading && projects.length > 0">
         <mat-card class="project-card"
                   *ngFor="let project of projects.slice(0, 6)"
                   (click)="navigateToBoard(project.id)">
@@ -108,12 +111,18 @@
     </div>
 
     <!-- Recent tasks section -->
-    <div class="section" *ngIf="recentTasks.length > 0">
+    <div class="section">
       <div class="section-header">
         <h2>Recent Tasks</h2>
       </div>
+      <app-empty-state
+        *ngIf="!isLoading && recentTasks.length === 0"
+        icon="task_alt"
+        title="No Recent Tasks"
+        message="Tasks will appear here once your projects start moving.">
+      </app-empty-state>
 
-      <mat-card>
+      <mat-card *ngIf="recentTasks.length > 0">
         <mat-card-content>
           <div class="task-sort-bar">
             <button mat-button type="button" (click)="sortRecentTasks('title')">

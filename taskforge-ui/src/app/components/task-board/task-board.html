@@ -2,9 +2,10 @@
 
 <div class="board-container">
 
-  <div class="loading-spinner" *ngIf="isLoading">
-    <mat-spinner></mat-spinner>
-  </div>
+  <app-loading
+    *ngIf="isLoading"
+    message="Loading Task Board...">
+  </app-loading>
 
   <div *ngIf="!isLoading">
 
@@ -40,10 +41,12 @@
              [id]="column.id"
              (cdkDropListDropped)="onTaskDrop($event, column.status)">
 
-          <div class="empty-column" *ngIf="column.tasks.length === 0">
-            <mat-icon>inbox</mat-icon>
-            <p>No tasks</p>
-          </div>
+          <app-empty-state
+            *ngIf="!isLoading && column.tasks.length === 0"
+            icon="check_circle"
+            title="No Tasks"
+            message="Create a task or move one here.">
+          </app-empty-state>
 
           <mat-card class="task-card"
                     *ngFor="let task of column.tasks"

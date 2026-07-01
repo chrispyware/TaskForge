@@ -1,0 +1,57 @@
+<div class="command-backdrop" *ngIf="isOpen" (click)="closePalette()">
+  <section class="command-panel" (click)="$event.stopPropagation()">
+
+    <header class="command-header">
+      <div>
+        <span class="terminal-label">command</span>
+        <h2>TaskForge Command Palette</h2>
+      </div>
+
+      <kbd>Esc</kbd>
+    </header>
+
+    <div class="command-input-row">
+      <mat-icon>terminal</mat-icon>
+
+      <input
+        #commandInput
+        type="text"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange()"
+        placeholder="Type a command or destination..."
+        autocomplete="off">
+    </div>
+
+    <div class="command-list" *ngIf="filteredCommands.length > 0">
+      <button
+        type="button"
+        class="command-item"
+        *ngFor="let command of filteredCommands; let i = index"
+        [class.selected]="i === selectedIndex"
+        (mouseenter)="selectedIndex = i"
+        (click)="runCommand(command)">
+
+        <mat-icon>{{ command.icon }}</mat-icon>
+
+        <span class="command-copy">
+          <span class="command-label">{{ command.label }}</span>
+          <span class="command-description">{{ command.description }}</span>
+        </span>
+
+        <kbd>Enter</kbd>
+      </button>
+    </div>
+
+    <div class="command-empty" *ngIf="filteredCommands.length === 0">
+      <mat-icon>search_off</mat-icon>
+      <p>No commands found.</p>
+    </div>
+
+    <footer class="command-footer">
+      <span><kbd>↑</kbd><kbd>↓</kbd> Navigate</span>
+      <span><kbd>Enter</kbd> Open</span>
+      <span><kbd>Ctrl</kbd><kbd>K</kbd> Toggle</span>
+    </footer>
+
+  </section>
+</div>

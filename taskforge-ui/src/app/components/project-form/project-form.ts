@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Router } from '@angular/router';
 import { ProjectService } from '../../services/project.service';
 import { Navbar } from '../navbar/navbar';
+import { Loading } from '../shared/loading/loading';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,6 +19,7 @@ import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
     CommonModule,
     ReactiveFormsModule,
     Navbar,
+    Loading,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,

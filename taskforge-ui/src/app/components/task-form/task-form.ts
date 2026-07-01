@@ -1,11 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TaskService } from '../../services/task.service';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
 import { Task } from '../../models/task';
 import { Navbar } from '../navbar/navbar';
+import { Loading } from '../shared/loading/loading';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,7 +25,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     Navbar,
+    Loading,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
@@ -47,6 +50,8 @@ export class TaskForm implements OnInit {
   taskId: number | null = null;
   projectId: number = 0;
   users: User[] = [];
+  filteredUsers: User[] = [];
+  assigneeSearch: string = '';
   errorMessage = '';
 
   priorities = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
@@ -86,6 +91,7 @@ export class TaskForm implements OnInit {
     this.userService.getAllUsers().subscribe({
       next: (users) => {
         this.users = users;
+        this.filteredUsers = users;
         this.cdr.detectChanges();
       },
       error: () => {
@@ -106,6 +112,10 @@ export class TaskForm implements OnInit {
           assignedToId: task.assignedToId,
           dueDate: task.dueDate ? new Date(task.dueDate) : null
         });
+        const assignedUser = this.users.find(user => user.id === task.assignedToId);
+        this.assigneeSearch = assignedUser?.displayName || '';
+        this.filterAssignees();
+
         this.projectId = task.projectId;
         this.isLoading = false;
         this.cdr.detectChanges();
@@ -116,6 +126,42 @@ export class TaskForm implements OnInit {
         this.cdr.detectChanges();
       }
     });
+  }
+
+  filterAssignees(): void {
+    const searchValue = this.assigneeSearch.toLowerCase().trim();
+
+    this.filteredUsers = this.users.filter(user =>
+      user.displayName.toLowerCase().includes(searchValue)
+    );
+
+    const exactMatch = this.users.find(user =>
+      user.displayName.toLowerCase() === searchValue
+    );
+
+    if (!exactMatch) {
+      this.taskForm.patchValue({ assignedToId: null }, { emitEvent: false });
+    }
+  }
+
+  selectAssignee(user: User): void {
+    this.assigneeSearch = user.displayName;
+
+    this.taskForm.patchValue({
+      assignedToId: user.id
+    });
+
+    this.filteredUsers = [user];
+  }
+
+  clearAssignee(): void {
+    this.assigneeSearch = '';
+
+    this.taskForm.patchValue({
+      assignedToId: null
+    });
+
+    this.filteredUsers = this.users;
   }
 
   onSubmit(): void {
